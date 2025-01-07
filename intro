@@ -1,4 +1,9 @@
-1. Provide a yaml-file, that describes a creating namespace.
+Two approaches:
+Imperative is that where you directly instruct to perform a specific action.
+Declarative is that describes the desired state of something (resource).
+
+# 1 - create a namespace
+1.1. Provide a yaml-file, that describes a creating namespace.
 kind: Namespace
 apiVersion: v1
 metadata:
@@ -6,10 +11,10 @@ metadata:
   labels:
     app: nginx-app
 
-Two approaches:
-Imperative is that where you directly instruct to perform a specific action.
-Declarative is that describes the desired state of something (resource).
+1.2.
+k create ns anotherproject
 
+# 2 - create a pod into namespace
 apiVersion: v1
 kind: Pod
 metadata:
