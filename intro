@@ -2,23 +2,28 @@ Two approaches:
 Imperative is that where you directly instruct to perform a specific action.
 Declarative is that describes the desired state of something (resource).
 
-# 1 - create a namespace
-1.1. Provide a yaml-file, that describes a creating namespace.
+### 1 - create a namespace
+1.1. Create a namespace in CLI.
+k create ns project1
+
+1.1. Provide a yaml-file, that describes a namespace creating.
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: myproject
+  name: project2
   labels:
     app: nginx-app
 
-1.2.
-k create ns anotherproject
+### 2 - create a pod into namespace
+2.1. kreate a Pod in CLI.
+kubectl run nginx-pod --image=nginx --port=80 -n project1
 
-# 2 - create a pod into namespace
+2.2. Provide a yaml-file, that describes a creating of pod.
 apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-pod
+  namespace: project2
   labels:
     app: nginx
 spec:
@@ -26,14 +31,14 @@ spec:
   - name: nginx-container
     image: nginx:latest
 
-# Check nginx
-kubectl run nginx-pod --image=nginx --port=80 --restart=Never
-service nginx status
-k exec pods/nginx-pod -- bash -c 'curl localhost'
-apt-get update && apt-get install vim ed -y
-vi /usr/share/nginx/html/index.html
-service nginx reload
-vi /etc/nginx/conf.d/default.conf
+### Check if nginx is running
+k exec -n project1 pods/nginx-pod -- bash -c 'curl localhost; service nginx status'
+#k exec -n project1 -it pods/nginx-pod -- bash
+#apt-get update && apt-get install ed -y
+#cat /etc/nginx/conf.d/default.conf
+#ed -p: /usr/share/nginx/html/index.html
+#service nginx reload
+#curl localhost
 nginx -t
 apt-get update && apt-get install -y net-tools lsof
 
