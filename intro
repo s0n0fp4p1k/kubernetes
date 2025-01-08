@@ -32,24 +32,22 @@ spec:
     image: nginx:latest
 
 ### Check if nginx is running
-k exec -n project1 pods/nginx-pod -- bash -c 'curl localhost; service nginx status'
-#k exec -n project1 -it pods/nginx-pod -- bash
-#apt-get update && apt-get install ed -y
+k exec -n project1 pods/nginx-pod -- bash -c 'service nginx status' 
+k exec -n project1 pods/nginx-pod -- bash -c 'curl localhost'
+k exec -n project1 -it pods/nginx-pod -- bash
+echo -e '\nHello\n' > /usr/share/nginx/html/index.html
+#apt-get update && apt-get install ed nett-tools lsof -y
 #cat /etc/nginx/conf.d/default.conf
 #ed -p: /usr/share/nginx/html/index.html
 #service nginx reload
 #curl localhost
-nginx -t
-apt-get update && apt-get install -y net-tools lsof
-
-if [ -e /var/run/nginx.pid ]; then echo "nginx is running"; fi	
+#nginx -t
+#if [ -e /var/run/nginx.pid ]; then echo "nginx is running"; fi	
 	
-# Delete all pods
 kubectl delete pods -l app=nginx -A
+k label -n project1 pods nginx-pod app=nginx
 
--------
-Service
--------
+### 3. Services
 The idea of a Service is to group a set of Pod endpoints into a single resource.
 There are two type of service dicovery thoughclusterip
 - Internal Service discovery (Env VARs and DNS)
