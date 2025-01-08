@@ -31,7 +31,6 @@ spec:
   - name: nginx-container
     image: nginx:latest
 
-### Check if nginx is running
 k exec -n project1 pods/nginx-pod -- bash -c 'service nginx status' 
 k exec -n project1 pods/nginx-pod -- bash -c 'curl localhost'
 k exec -n project1 -it pods/nginx-pod -- bash
