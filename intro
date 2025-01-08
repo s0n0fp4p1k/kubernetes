@@ -35,7 +35,7 @@ k exec -n project1 pods/nginx-pod -- bash -c 'service nginx status'
 k exec -n project1 pods/nginx-pod -- bash -c 'curl localhost'
 k exec -n project1 -it pods/nginx-pod -- bash
 echo -e '\nHello\n' > /usr/share/nginx/html/index.html
-#apt-get update && apt-get install ed nett-tools lsof -y
+
 #cat /etc/nginx/conf.d/default.conf
 #ed -p: /usr/share/nginx/html/index.html
 #service nginx reload
@@ -51,6 +51,9 @@ The idea of a Service is to group a set of Pod endpoints into a single resource.
 There are two type of service dicovery thoughclusterip
 - Internal Service discovery (Env VARs and DNS)
 - External Service Discovery (NodePort and LB)
+apt-get update && apt-get install ed nett-tools lsof -y
+netstat -tulpn | grep LISTEN
+lsof -i -P -n  | grep LISTEN
 
 You use a Service to make that set of Pods available on the network 
 so that clients can interact with it.
